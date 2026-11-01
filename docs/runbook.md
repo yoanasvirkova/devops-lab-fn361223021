@@ -64,3 +64,35 @@ pytest -v
 1. **Работи ли процесът?** `docker ps -a` (за Docker) или проверете терминала, в който е пуснат uvicorn. Ако контейнерът е спрял, вижте `docker logs notes`.
 2. **Какво казват логовете?** `docker logs notes` – търсете traceback, `ModuleNotFoundError`, грешен път `app.main:app`.
 3. **Слуша ли на правилния адрес и порт?** Хостът трябва да е `0.0.0.0`, а не `127.0.0.1`. Портът трябва да е пренасочен (`-p 8000:8000`) и да няма друг процес на 8000
+
+## Стартиране с Compose
+
+Първоначално: `cp .env.example .env` и смени паролата в `.env`.
+
+**Up**
+```bash
+docker compose up -d --build
+```
+
+**Статус**
+```bash
+docker compose ps          # db трябва да е (healthy)
+curl localhost:8000/ready  # {"status":"ready"}
+```
+
+**Logs**
+```bash
+docker compose logs -f app
+docker compose logs db
+```
+
+**Down**
+```bash
+docker compose down        # спира и трие контейнерите и мрежата, данните във volume-а остават
+docker compose down -v     # трие и volumes, всички бележки се губят
+```
+
+**Adminer (по желание)**
+```bash
+docker compose --profile tools up -d   # порт 8081, сървър: db
+```
