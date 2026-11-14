@@ -1,3 +1,5 @@
+[![CI](https://github.com/yoanasvirkova/devops-lab-fn361223021/actions/workflows/ci.yml/badge.svg)](https://github.com/yoanasvirkova/devops-lab-fn361223021/actions/workflows/ci.yml)
+
 # Notes API: учебно приложение за курса по DevOps
 
 **Български** · [English](#notes-api--devops-course-starter-app)
