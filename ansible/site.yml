@@ -46,6 +46,17 @@
         line: "host all all 0.0.0.0/0 scram-sha-256"
       notify: Restart PostgreSQL
 
+    # On Debian "postgresql" is only a wrapper; the real server is postgresql@17-main.
+    - name: PostgreSQL is started and enabled
+      ansible.builtin.service:
+        name: postgresql@17-main
+        state: started
+        enabled: true
+
+    # Apply the config changes now, before we connect to create the user and db.
+    - name: Run pending handlers
+      ansible.builtin.meta: flush_handlers
+
     - name: Create the database user
       community.postgresql.postgresql_user:
         name: "{{ db_user }}"
